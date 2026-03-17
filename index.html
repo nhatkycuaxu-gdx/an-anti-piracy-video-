@@ -43,8 +43,8 @@
     }
 
     function applyProtocol() {
-        let stealth = color(255, 255, 255, 2); 
-        
+        let breath = 2.5 + sin(frameCount * 0.05) * 1; 
+let stealth = color(255, 255, 255, breath);       
         stroke(stealth);
         noFill();
         strokeWeight(1);
