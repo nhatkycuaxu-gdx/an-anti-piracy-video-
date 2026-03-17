@@ -8,29 +8,43 @@
 <body>
 <script>
     let myVideo;
+    let posX, posY;
+
     function setup() {
         createCanvas(windowWidth, windowHeight);
         myVideo = createVideo(['20260317_135053.mp4'], videoLoaded);
         myVideo.hide();
+        posX = width / 2;
+        posY = height / 2;
     }
-document.addEventListener('contextmenu', event => event.preventDefault());
-document.onkeydown = function(e) {
-    if (e.keyCode == 123 || (e.ctrlKey && (e.shiftKey && e.keyCode == 73)) || (e.ctrlKey && e.keyCode == 85)) {
-        alert("Warning! You CANNOT VIEW THE SOURCE CODE because it is confidential.");
-        return false;
-    }
-};
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123 || (e.ctrlKey && (e.shiftKey && e.keyCode == 73)) || (e.ctrlKey && e.keyCode == 85)) {
+            alert("Warning! You CANNOT VIEW THE SOURCE CODE because it is confidential.");
+            return false;
+        }
+    };
+
     function videoLoaded() {
         myVideo.loop();
         myVideo.volume(1);
     }
+
     function draw() {
         background(0);
         image(myVideo, 0, 0, width, height);
+       
+        if (frameCount % 60 === 0) {
+            posX = random(50, width - 150);
+            posY = random(50, height - 50);
+        }
+        
         applyProtocol();
     }
+
     function applyProtocol() {
         let stealth = color(255, 255, 255, 2); 
+        
         stroke(stealth);
         noFill();
         strokeWeight(1);
@@ -38,19 +52,23 @@ document.onkeydown = function(e) {
         arc(width, 0, 80, 80, HALF_PI, PI);
         arc(width, height, 80, 80, PI, PI + HALF_PI);
         arc(0, height, 80, 80, PI + HALF_PI, TWO_PI);
+
+        fill(stealth);
+        noStroke();
         textAlign(CENTER);
         textSize(12);
-        text("NOT_MIC_PHOTO_VN", width/2, height - 20);
+        text("NOT_MIC_PHOTO_VN", posX, posY);
         text("VN", width - 30, 30);
     }
 
     function windowResized() {
         resizeCanvas(windowWidth, windowHeight);
     }
-function mousePressed() {
-  myVideo.play();
-}
 
+    function mousePressed() {
+        myVideo.play();
+    }
 </script>
 </body>
 </html>
+
